@@ -1,0 +1,5 @@
+1. Whitespace - blank space? 
+2. // /* */
+3. package fmt
+4. import "os" os.Exit
+5. done

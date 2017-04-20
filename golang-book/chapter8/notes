@@ -1,0 +1,24 @@
+// strings package
+- Contains
+- Count
+- HasPrefix
+- HasSuffix
+- Index
+- Join
+- Repeat
+- Replace
+- Split
+- ToLower/ToUpper
+
+// i/o os, io/ioutil
+- Reader/Write
+- Open
+- ioutil.ReadFile
+- Create
+
+// errors
+
+- err := errors.New("error msg")
+
+// container/list 
+

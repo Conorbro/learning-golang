@@ -1,0 +1,6 @@
+1. var x int = 1, x := 1
+2. 6
+3. Scope determines where in a program a variable exists, by its block {}
+4. var can change, const cannot change
+5. Done
+6. Done 

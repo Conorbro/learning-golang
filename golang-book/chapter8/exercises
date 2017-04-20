@@ -1,0 +1,8 @@
+1. Packages allow us to break up large programs into smaller, easier to understand, and easier to maintain programs - encourage software reusage.
+2. Identifiers starting with capital letters and ones that don't - capital letters are exported ie accessible from other packages, lowercase starting identifiers are not exported
+3. Package alias - alternative name for a package 
+e.g. import f "fmt"
+4. done
+5. comment before the funciton and run command
+godoc golang-book/chapter8/math Average
+
