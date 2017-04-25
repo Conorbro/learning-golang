@@ -4,21 +4,10 @@ package main
 // Due February 14, 2017 at 11:59pm
 
 import (
-	"fmt"
 	"sort"
-	"strings"
 )
 
 func main() {
-	// Feel free to use the main function for testing your functions
-	hello := map[string]string{
-		"hello":   "world",
-		"hola":    "mundo",
-		"bonjour": "monde",
-	}
-	for k, v := range hello {
-		fmt.Printf("%s, %s\n", strings.Title(k), v)
-	}
 }
 
 // Problem 1: Sorting Names
@@ -40,6 +29,17 @@ type Person struct {
 }
 
 type PersonSlice []*Person
+
+func (p PersonSlice) Len() int {
+	return 1
+}
+
+func (p PersonSlice) Less(i, j int) bool {
+	return true
+}
+
+func (p PersonSlice) Swap(i, j int) {
+}
 
 // NewPerson is a constructor for Person. ID should be assigned automatically in
 // sequential order, starting at 1 for the first Person created.
