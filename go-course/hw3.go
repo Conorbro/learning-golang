@@ -4,10 +4,22 @@ package main
 // Due February 14, 2017 at 11:59pm
 
 import (
+	"fmt"
 	"sort"
 )
 
+var peopleCount = 0
+
 func main() {
+	p1 := NewPerson("Conor", "Broderick")
+	p2 := NewPerson("Aisling", "Mangan")
+	p3 := NewPerson("Bory", "Mangan-Broderick")
+	var people PersonSlice
+	people = []Person{*p1, *p2, *p3}
+	fmt.Println(people.Len())
+	fmt.Println(people.Less(4, 3))
+	people.Swap(1, 2)
+	fmt.Println(people)
 }
 
 // Problem 1: Sorting Names
@@ -28,24 +40,51 @@ type Person struct {
 	LastName  string
 }
 
-type PersonSlice []*Person
+// PersonSlice is a slice of people
+type PersonSlice []Person
 
+// Len returns length of person slice
 func (p PersonSlice) Len() int {
-	return 1
+	return len(p)
 }
 
+// Less returns true if i is less than j and false otherwise
 func (p PersonSlice) Less(i, j int) bool {
-	return true
+	if i < j {
+		return true
+	}
+	return false
 }
 
+// Swap swaps person of id i's position with person of id j's position in the PersonSlice
 func (p PersonSlice) Swap(i, j int) {
+	indexI := p.indexOf(i)
+	indexJ := p.indexOf(j)
+	temp := p[indexI]
+	fmt.Println(indexI, indexJ)
+	p[indexI] = p[indexJ]
+	p[indexJ] = temp
+}
+
+func (p PersonSlice) indexOf(i int) int {
+	for index, person := range p {
+		if person.ID == i {
+			return index
+		}
+	}
+	return -1
 }
 
 // NewPerson is a constructor for Person. ID should be assigned automatically in
 // sequential order, starting at 1 for the first Person created.
 func NewPerson(first, last string) *Person {
-	// TODO
-	return new(Person)
+	p := new(Person)
+	p.FirstName = first
+	p.LastName = last
+	peopleCount++
+	p.ID = peopleCount
+	fmt.Println(p.ID)
+	return p
 }
 
 // Problem 2: IsPalindrome Redux
