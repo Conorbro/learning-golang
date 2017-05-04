@@ -11,13 +11,20 @@ import (
 var peopleCount = 0
 
 func main() {
-	p1 := NewPerson("Conor", "Broderick")
-	p2 := NewPerson("Aisling", "Mangan")
-	p3 := NewPerson("Bory", "Mangan-Broderick")
+	// Q1
+	p1 := NewPerson("aaa", "aaa")
+	p2 := NewPerson("aaa", "aaa")
+	p3 := NewPerson("aaa", "aaa")
+	// p2 := NewPerson("Aisling", "Mangan")
+	// p3 := NewPerson("Bory", "Mangan-Broderick")
 	var people PersonSlice
 	people = []Person{*p1, *p2, *p3}
-	sort.Sort(people)
-	fmt.Println(people)
+	// sort.Sort(people)
+	// fmt.Println(people)
+
+	// Q2
+	fmt.Println(IsPalindrome(people))
+
 }
 
 // Problem 1: Sorting Names
@@ -67,7 +74,7 @@ func NewPerson(first, last string) *Person {
 	p := new(Person)
 	p.FirstName = first
 	p.LastName = last
-	peopleCount++
+	// peopleCount++
 	p.ID = peopleCount
 	return p
 }
@@ -83,8 +90,16 @@ func NewPerson(first, last string) *Person {
 // IsPalindrome checks if the string is a palindrome.
 // A palindrome is a string that reads the same backward as forward.
 func IsPalindrome(s sort.Interface) bool {
-	// TODO
-	return false
+	end := s.Len() - 1
+	strt := 0
+	for i := 0; i < s.Len()/2; i++ {
+		if s.Less(strt, end) {
+			return false
+		}
+		strt++
+		end--
+	}
+	return true
 }
 
 // Problem 3: Functional Programming
@@ -100,6 +115,10 @@ func IsPalindrome(s sort.Interface) bool {
 // Note the argument signature of f - func(int, int) int.
 // This means f is a function which has 2 int arguments and returns an int.
 func Fold(s []int, v int, f func(int, int) int) int {
-	// TODO
-	return 0
+
+	if len(s) > 1 {
+		return f(v, s[0])
+	}
+
+	return v
 }
