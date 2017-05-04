@@ -16,9 +16,7 @@ func main() {
 	p3 := NewPerson("Bory", "Mangan-Broderick")
 	var people PersonSlice
 	people = []Person{*p1, *p2, *p3}
-	fmt.Println(people.Len())
-	fmt.Println(people.Less(4, 3))
-	people.Swap(1, 2)
+	sort.Sort(people)
 	fmt.Println(people)
 }
 
@@ -50,29 +48,17 @@ func (p PersonSlice) Len() int {
 
 // Less returns true if i is less than j and false otherwise
 func (p PersonSlice) Less(i, j int) bool {
-	if i < j {
-		return true
+	if p[i].FirstName == p[j].FirstName && p[i].LastName == p[j].LastName {
+		return p[i].ID < p[j].ID
+	} else if p[i].LastName == p[j].LastName {
+		return p[i].FirstName < p[j].FirstName
 	}
-	return false
+	return p[i].LastName < p[j].LastName
 }
 
 // Swap swaps person of id i's position with person of id j's position in the PersonSlice
 func (p PersonSlice) Swap(i, j int) {
-	indexI := p.indexOf(i)
-	indexJ := p.indexOf(j)
-	temp := p[indexI]
-	fmt.Println(indexI, indexJ)
-	p[indexI] = p[indexJ]
-	p[indexJ] = temp
-}
-
-func (p PersonSlice) indexOf(i int) int {
-	for index, person := range p {
-		if person.ID == i {
-			return index
-		}
-	}
-	return -1
+	p[i], p[j] = p[j], p[i]
 }
 
 // NewPerson is a constructor for Person. ID should be assigned automatically in
@@ -83,7 +69,6 @@ func NewPerson(first, last string) *Person {
 	p.LastName = last
 	peopleCount++
 	p.ID = peopleCount
-	fmt.Println(p.ID)
 	return p
 }
 
