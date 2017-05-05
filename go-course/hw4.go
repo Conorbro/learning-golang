@@ -3,21 +3,28 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
+	"encoding/binary"
 	"fmt"
 	"io"
-	"strings"
+	"log"
+	"os"
+	"strconv"
 )
 
 func main() {
 	// Feel free to use the main function for testing your functions
-	hello := map[string]string{
-		"こんにちは": "世界",
-		"你好":    "世界",
-		"안녕하세요": "세계",
-	}
-	for k, v := range hello {
-		fmt.Printf("%s, %s\n", strings.Title(k), v)
-	}
+	// hello := map[string]string{
+	// 	"こんにちは": "世界",
+	// 	"你好":    "世界",
+	// 	"안녕하세요": "세계",
+	// }
+	// for k, v := range hello {
+	// 	fmt.Printf("%s, %s\n", strings.Title(k), v)
+	// }
+
+	FileSum("input.txt", "output.txt")
 }
 
 // Problem 1a: File processing
@@ -30,7 +37,37 @@ func main() {
 // You should expect your input to end with a newline, and the output should
 // have a newline after the result.
 func FileSum(input, output string) {
-	// TODO
+	var res int = 0
+	fi, err := os.Open(input)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fo, err := os.Open(output)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer fi.Close()
+	defer fo.Close()
+	w := bufio.NewWriter(fo)
+	scanner := bufio.NewScanner(fi)
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+		i, err := strconv.Atoi(scanner.Text())
+		if err != nil {
+			log.Fatal(err)
+		}
+		res += i
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	buf := new(bytes.Buffer)
+	binary.Write(buf, binary.LittleEndian, res)
+	// if err1 != nil {
+	// 	log.Fatal(err)
+	// }
+	fmt.Println(buf.Bytes())
+	w.Write(buf.Bytes())
 }
 
 // Problem 1b: IO processing with interfaces
