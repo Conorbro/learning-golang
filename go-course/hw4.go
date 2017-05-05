@@ -4,9 +4,6 @@ package main
 
 import (
 	"bufio"
-	"bytes"
-	"encoding/binary"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -23,7 +20,6 @@ func main() {
 	// for k, v := range hello {
 	// 	fmt.Printf("%s, %s\n", strings.Title(k), v)
 	// }
-
 	FileSum("input.txt", "output.txt")
 }
 
@@ -36,38 +32,34 @@ func main() {
 // The two parameters, input and output, are the filenames of those files.
 // You should expect your input to end with a newline, and the output should
 // have a newline after the result.
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+// FileSum reads in numbers from input, sums them, and writes the result to output.txt
 func FileSum(input, output string) {
-	var res int = 0
+	var res int
 	fi, err := os.Open(input)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fo, err := os.Open(output)
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
+	fo, err := os.Create(output)
+	check(err)
 	defer fi.Close()
 	defer fo.Close()
-	w := bufio.NewWriter(fo)
 	scanner := bufio.NewScanner(fi)
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
 		i, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			log.Fatal(err)
-		}
+		check(err)
 		res += i
 	}
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
-	buf := new(bytes.Buffer)
-	binary.Write(buf, binary.LittleEndian, res)
-	// if err1 != nil {
-	// 	log.Fatal(err)
-	// }
-	fmt.Println(buf.Bytes())
-	w.Write(buf.Bytes())
+	sRes := strconv.Itoa(res)
+	fo.WriteString("Result = " + sRes)
+
 }
 
 // Problem 1b: IO processing with interfaces
